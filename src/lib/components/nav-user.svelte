@@ -1,5 +1,4 @@
 <script lang="ts">
-  import BadgeCheckIcon from "@lucide/svelte/icons/badge-check";
   import ChevronsUpDownIcon from "@lucide/svelte/icons/chevrons-up-down";
   import LogOutIcon from "@lucide/svelte/icons/log-out";
   import SparklesIcon from "@lucide/svelte/icons/sparkles";
@@ -47,7 +46,7 @@
           <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
             <Avatar.Root class="size-8 rounded-lg">
               <Avatar.Image src="/icon-512.png" alt={user.name} />
-              <Avatar.Fallback class="rounded-lg">CN</Avatar.Fallback>
+              <Avatar.Fallback class="rounded-lg">SO</Avatar.Fallback>
             </Avatar.Root>
             <div class="grid flex-1 text-start text-sm leading-tight">
               <span class="truncate font-medium">{user.name}</span>
@@ -59,13 +58,9 @@
         <DropdownMenu.Group>
           <DropdownMenu.Item>
             <SparklesIcon />
-            Upgrade to Pro
+            Support us
           </DropdownMenu.Item>
         </DropdownMenu.Group>
-        <DropdownMenu.Item>
-          <BadgeCheckIcon />
-          Account
-        </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item>
           <LogOutIcon />

@@ -1,10 +1,14 @@
+use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tauri::{AppHandle, Wry};
 use tauri_plugin_store::StoreExt;
 
 const STORE_FILE: &str = "settings.json";
 const API_KEY_RECORD: &str = "resend_api_key";
+const FROM_EMAILS_KEY: &str = "from_emails";
+const PROFILE_KEY: &str = "profile";
 
+// Api Key Management
 #[tauri::command]
 pub fn has_api_key(app: AppHandle<Wry>) -> Result<bool, String> {
     let store = app
@@ -71,6 +75,88 @@ pub fn delete_api_key(app: AppHandle<Wry>) -> Result<(), String> {
         .map_err(|e| format!("ERROR Failed to save store: {}", e))?;
 
     println!("[INFO] API key deleted successfully");
+
+    Ok(())
+}
+
+// From emails management
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FromEmail {
+    pub id: String,
+    pub label: String,
+    pub address: String,
+    #[serde(rename = "isDefault")]
+    pub is_default: bool,
+}
+
+pub(crate) fn load_from_emails(app: &AppHandle<Wry>) -> Result<Vec<FromEmail>, String> {
+    let store = app
+        .store(STORE_FILE)
+        .map_err(|e| format!("[ERROR] Failed to load store: {}", e))?;
+
+    let value = store.get(FROM_EMAILS_KEY);
+
+    if let Some(raw) = value {
+        let emails: Vec<FromEmail> = serde_json::from_value(raw.clone())
+            .map_err(|e| format!("[ERROR] Failed to parse from_emails: {}", e))?;
+        Ok(emails)
+    } else {
+        Ok(Vec::new())
+    }
+}
+
+pub(crate) fn save_from_emails(app: &AppHandle<Wry>, emails: &[FromEmail]) -> Result<(), String> {
+    let store = app
+        .store(STORE_FILE)
+        .map_err(|e| format!("[ERROR] Failed to load store: {}", e))?;
+
+    store.set(FROM_EMAILS_KEY, json!(emails));
+
+    store
+        .save()
+        .map_err(|e| format!("[ERROR] Failed to save store: {}", e))?;
+
+    Ok(())
+}
+
+// Profile Management
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Profile {
+    #[serde(rename = "firstName")]
+    pub first_name: String,
+
+    #[serde(rename = "lastName")]
+    pub last_name: String,
+    pub username: String,
+    pub domain: String,
+}
+
+pub(crate) fn load_profile(app: &AppHandle<Wry>) -> Result<Option<Profile>, String> {
+    let store = app
+        .store(STORE_FILE)
+        .map_err(|e| format!("[ERROR] Failed to load store: {}", e))?;
+
+    let value = store.get(PROFILE_KEY);
+
+    if let Some(raw) = value {
+        let profile: Profile = serde_json::from_value(raw.clone())
+            .map_err(|e| format!("[ERROR] Failed to parse profile: {}", e))?;
+        Ok(Some(profile))
+    } else {
+        Ok(None)
+    }
+}
+
+pub(crate) fn save_profile(app: &AppHandle<Wry>, profile: &Profile) -> Result<(), String> {
+    let store = app
+        .store(STORE_FILE)
+        .map_err(|e| format!("[ERROR] Failed to load store: {}", e))?;
+
+    store.set(PROFILE_KEY, json!(profile));
+
+    store
+        .save()
+        .map_err(|e| format!("[ERROR] Failed to save store: {}", e))?;
 
     Ok(())
 }

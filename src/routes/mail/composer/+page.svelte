@@ -15,16 +15,13 @@
   import { toast } from "svelte-sonner";
   import { goto } from "$app/navigation";
   import { invoke } from "@tauri-apps/api/core";
-  import type { AttachmentPayload } from "@/lib/types";
-
-  const fromEmailOptions = [
-    "Cristhian <c@rxtsel.dev>",
-    "Contact <contact@rxtsel.dev>",
-    "Hello <hello@rxtsel.dev>",
-  ];
+  import type { AttachmentPayload, FromEmail } from "@/lib/types";
+  import { onMount } from "svelte";
+  import { listFromEmails, formatFromEmail } from "@/lib/commom/from-emails";
 
   let toEmails = $state<Tag[]>([]);
-  let from = $state<string>(fromEmailOptions[0]);
+  let fromEmails = $state<FromEmail[]>([]);
+  let from = $state<string>("");
   let subject = $state<string>("");
   let content = $state<string>("");
   let files = $state<File[]>([]);
@@ -84,7 +81,7 @@
 
       // Reset form and states
       toEmails = [];
-      from = fromEmailOptions[0];
+      from = "";
       subject = "";
       content = "";
       files = [];
@@ -104,6 +101,22 @@
       toast.error("Failed to send email. Please try again.");
     }
   }
+
+  // Get From email options
+  onMount(async () => {
+    try {
+      const list = await listFromEmails();
+      fromEmails = list;
+
+      const defaultFrom = list.find((f) => f.isDefault) ?? list[0];
+
+      if (defaultFrom) {
+        from = formatFromEmail(defaultFrom);
+      }
+    } catch (e) {
+      console.error("[fromEmails] load error", e);
+    }
+  });
 </script>
 
 <form
@@ -129,9 +142,21 @@
             {/if}
           </Select.Trigger>
           <Select.Content>
-            {#each fromEmailOptions as option}
-              <Select.Item value={option}>{option}</Select.Item>
-            {/each}
+            {#if fromEmails.length === 0}
+              <Button
+                variant="ghost"
+                class="w-full text-center"
+                onclick={() => goto("/settings/emails")}
+              >
+                Create email address
+              </Button>
+            {:else}
+              {#each fromEmails as option}
+                <Select.Item value={formatFromEmail(option)}
+                  >{formatFromEmail(option)}</Select.Item
+                >
+              {/each}
+            {/if}
           </Select.Content>
         </Select.Root>
         {#if errors.from}

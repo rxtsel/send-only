@@ -1,11 +1,12 @@
 <script lang="ts" module>
   import SendIcon from "@lucide/svelte/icons/send";
   import PlusIcon from "@lucide/svelte/icons/plus";
+  import SettingsDialog from "./settings-dialog.svelte";
 
   // This is sample data
   const data = {
     user: {
-      name: "shadcn",
+      name: "Send Only",
       email: "m@example.com",
       avatar: "/icon-512.png",
     },
@@ -196,6 +197,7 @@
       </Sidebar.Group>
     </Sidebar.Content>
     <Sidebar.Footer>
+      <SettingsDialog />
       <NavUser user={data.user} />
     </Sidebar.Footer>
   </Sidebar.Root>
