@@ -16,11 +16,7 @@
   import { onMount } from "svelte";
   import { toast } from "svelte-sonner";
   import type { SentEmail } from "../types";
-  import {
-    formatEmailDate,
-    getEmailTeaser,
-    listSentEmails,
-  } from "../commom/sent";
+  import { formatEmailDate, listSentEmails } from "../commom/sent";
   import { Loader } from "@lucide/svelte";
 
   let {
@@ -227,17 +223,14 @@
                   : ''}"
               >
                 <div class="flex w-full items-center gap-2">
-                  <span class="font-medium truncate">{mail.to[0]}</span>
+                  <span class="font-semibold truncate">{mail.to[0]}</span>
                   <span class="ms-auto text-xs shrink-0">
                     {formatEmailDate(mail.created_at)}
                   </span>
                 </div>
-                <span class="font-medium truncate w-full">{mail.subject}</span>
-                <span
-                  class="line-clamp-2 w-full whitespace-break-spaces text-xs text-muted-foreground"
+                <span class="text-muted-foreground truncate w-full"
+                  >{mail.subject}</span
                 >
-                  {getEmailTeaser(mail.html)}
-                </span>
               </button>
             {/each}
 
