@@ -30,7 +30,7 @@
       console.log("API key exists:", exists);
       if (exists) {
         // If the API key already exists, go directly to the composer
-        goto("/composer");
+        goto("/mail/composer");
       }
     } catch (err) {
       console.error("Error checking API key:", err);
