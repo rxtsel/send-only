@@ -224,6 +224,18 @@
               <Field.Error>{errors.apiKey}</Field.Error>
             {/if}
           </Field.Field>
+          <Field.Field>
+            <Field.Description>
+              You can find your API key in your{" "}
+              <a
+                href="https://resend.com/api-keys"
+                target="_blank"
+                class="underline underline-offset-4 font-medium"
+              >
+                Resend dashboard
+              </a>.
+            </Field.Description>
+          </Field.Field>
 
           <Button type="submit" class="w-full">Continue <ArrowRight /></Button>
         </Field.Group>
