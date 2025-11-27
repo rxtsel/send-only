@@ -87,9 +87,16 @@
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
         <DropdownMenu.Group>
-          <DropdownMenu.Item>
-            <SparklesIcon />
-            Support us
+          <DropdownMenu.Item class="p-0 m-0">
+            <a
+              href="https://donate.stripe.com/00wdR8dOd0YF7Ipce0a7C04"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex w-full item-center gap-2 py-2 px-2"
+            >
+              <SparklesIcon />
+              Support us
+            </a>
           </DropdownMenu.Item>
         </DropdownMenu.Group>
         <DropdownMenu.Separator />

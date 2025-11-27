@@ -14,7 +14,10 @@
       {
         "title": "SendOnly",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "minWidth": 600,
+        "minHeight": 400,
+        "center": true
       }
     ],
     "security": {
@@ -24,9 +27,7 @@
   "bundle": {
     "active": true,
     "targets": [
-      "appimage",
-      "msi",
-      "dmg"
+      "appimage"
     ],
     "icon": [
       "icons/32x32.png",
@@ -34,12 +35,6 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ],
-    "linux": {
-      "appimage": {
-        "bundleMediaFramework": false,
-        "files": {}
-      }
-    }
+    ]
   }
 }
