@@ -12,7 +12,7 @@
 
   let {
     ref = $bindable(null),
-    open = $bindable(false),
+    open = $bindable(true),
     onOpenChange = () => {},
     class: className,
     style,

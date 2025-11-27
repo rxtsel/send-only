@@ -56,7 +56,7 @@
       const exists = await hasApiKey();
 
       if (exists) {
-        goto("/mail/composer");
+        goto("/mail/sent");
         return;
       }
 
@@ -148,7 +148,7 @@
       ]);
 
       toast.success("Setup complete! Welcome to SendOnly");
-      goto("/mail/composer");
+      goto("/mail/sent");
     } catch (err) {
       console.error(err);
       toast.error("Failed to save. Try again.");

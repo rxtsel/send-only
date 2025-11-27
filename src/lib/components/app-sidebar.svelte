@@ -37,15 +37,17 @@
 
   let activeItem = $state(data.navMain[0]);
   let mails = $state<SentEmail[]>([]);
+  let isLoadingEmails = $state(true);
   let isRefreshing = $state(false);
   let isLoadingMore = $state(false);
   let hasMore = $state(true);
   let currentPage = $state(0);
 
   const sidebar = useSidebar();
-  const PAGE_SIZE = 12;
+  const PAGE_SIZE = 16;
 
   async function loadSentEmails(append = false) {
+    isLoadingEmails = true;
     try {
       if (append) {
         isLoadingMore = true;
@@ -81,6 +83,7 @@
     } finally {
       isRefreshing = false;
       isLoadingMore = false;
+      isLoadingEmails = false;
     }
   }
 
@@ -213,6 +216,14 @@
             <div class="p-8 text-center text-sm text-muted-foreground">
               No sent emails yet
             </div>
+          {:else if isLoadingEmails}
+            {@const skeletons = Array.from({ length: PAGE_SIZE })}
+            {#each skeletons}
+              <div class="animate-pulse p-4 border-b last:border-b-0">
+                <div class="h-4 bg-muted w-3/4 mb-2 rounded"></div>
+                <div class="h-3 bg-muted w-1/2 rounded"></div>
+              </div>
+            {/each}
           {:else}
             {#each mails as mail (mail.id)}
               {@const isActive = page.params.id === mail.id}
