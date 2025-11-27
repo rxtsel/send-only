@@ -10,10 +10,7 @@ export async function listSentEmails(
   // Only use cache for initial load (offset 0)
   if (!forceRefresh && offset === 0) {
     const cached = emailCache.getList();
-    if (cached) {
-      console.log("Using cached email list");
-      return cached;
-    }
+    if (cached) return cached
   }
 
   const emails = await invoke<SentEmail[]>("list_sent_emails", { limit, offset });
@@ -21,9 +18,6 @@ export async function listSentEmails(
   // Cache only the initial load
   if (offset === 0) {
     emailCache.setList(emails);
-  } else {
-    // For pagination, just add to individual cache
-    emails.forEach(email => emailCache.set(email.id, email));
   }
 
   return emails;
