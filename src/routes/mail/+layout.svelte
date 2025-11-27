@@ -7,10 +7,24 @@
   import { Send } from "@lucide/svelte";
   import * as AlertDialog from "$lib/components/ui/alert-dialog";
   import { buttonVariants } from "$lib/components/ui/button";
+  import { useSidebar } from "@/lib/components/ui/sidebar/context.svelte.js";
 
   let { children } = $props();
 
   let isConfirmDialogOpen = $state(false);
+  const sidebar = useSidebar();
+
+  const pathname = $derived(page.url.pathname);
+
+  // Route helpers
+  const isComposer = $derived(pathname === "/mail/composer");
+  const isSentRoot = $derived(pathname === "/mail/sent");
+  const isSentDetail = $derived(pathname.startsWith("/mail/sent/"));
+
+  // Extract only the id when we are on /mail/sent/:id
+  const emailId = $derived(
+    isSentDetail ? pathname.slice("/mail/sent/".length) : "",
+  );
 </script>
 
 <Sidebar.Provider style="--sidebar-width: 450px;">
@@ -19,22 +33,40 @@
     <header
       class="bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4"
     >
-      {#if page.url.pathname !== "/mail/composer"}
+      {#if !isComposer}
         <Sidebar.Trigger class="-ms-1" />
 
         <Separator
           orientation="vertical"
           class="me-2 data-[orientation=vertical]:h-4"
         />
+
         <Breadcrumb.Root>
           <Breadcrumb.List>
             <Breadcrumb.Item class="hidden md:block">
-              <Breadcrumb.Link href="##">All Inboxes</Breadcrumb.Link>
+              {#if isSentRoot}
+                <!-- On /mail/sent show it as current page -->
+                <Breadcrumb.Page>All sent</Breadcrumb.Page>
+              {:else}
+                <!-- On /mail/sent/:id use it as link -->
+                <Breadcrumb.Link
+                  href="/mail/sent"
+                  onclick={() => {
+                    sidebar.setOpen(true);
+                  }}
+                >
+                  All sent
+                </Breadcrumb.Link>
+              {/if}
             </Breadcrumb.Item>
-            <Breadcrumb.Separator class="hidden md:block" />
-            <Breadcrumb.Item>
-              <Breadcrumb.Page>Inbox</Breadcrumb.Page>
-            </Breadcrumb.Item>
+
+            {#if isSentDetail && emailId}
+              <Breadcrumb.Separator class="hidden md:block" />
+              <Breadcrumb.Item>
+                <!-- Only show the id, nothing else -->
+                <Breadcrumb.Page>{emailId}</Breadcrumb.Page>
+              </Breadcrumb.Item>
+            {/if}
           </Breadcrumb.List>
         </Breadcrumb.Root>
       {:else}
@@ -45,6 +77,7 @@
         </div>
       {/if}
     </header>
+
     <div class="flex flex-1 flex-col gap-4 p-4">
       {@render children()}
     </div>
@@ -61,7 +94,7 @@
       <AlertDialog.Header>
         <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
         <AlertDialog.Description>
-          This action cannot be undone. This will permanently send your email
+          This action cannot be undone. This will permanently send your email.
         </AlertDialog.Description>
       </AlertDialog.Header>
       <AlertDialog.Footer>
