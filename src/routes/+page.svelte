@@ -10,7 +10,7 @@
   import { Button } from "@/lib/components/ui/button";
   import * as Field from "@/lib/components/ui/field";
   import { Input } from "@/lib/components/ui/input";
-  import { ArrowRight } from "@lucide/svelte";
+  import { ArrowRight, Loader } from "@lucide/svelte";
   import { profileSchema } from "@/lib/schemas/profile.schema";
   import { apiKeySchema } from "@/lib/schemas/api-key.schema";
   import { emailOptionSchema } from "@/lib/schemas/email-option.schema";
@@ -51,13 +51,18 @@
    * CHECK API KEY ON LOAD
    * --------------------------------------------------------- */
   onMount(async () => {
+    isChecking = true;
     try {
       const exists = await hasApiKey();
 
-      if (exists) goto("/mail/composer");
+      if (exists) {
+        goto("/mail/composer");
+        return;
+      }
+
+      isChecking = false;
     } catch (err) {
       console.error(err);
-    } finally {
       isChecking = false;
     }
   });
@@ -179,9 +184,8 @@
 </script>
 
 {#if isChecking}
-  <div class="min-h-svh flex justify-center items-center">
-    <Logo class="mx-auto mb-4" />
-    <p class="text-muted-foreground">Loading...</p>
+  <div class="min-h-dvh w-full flex items-center justify-center">
+    <Loader class="animate-spin" />
   </div>
 {:else}
   <main class="container min-h-svh flex justify-center items-center flex-col">
