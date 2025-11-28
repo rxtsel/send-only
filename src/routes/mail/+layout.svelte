@@ -31,7 +31,7 @@
   <AppSidebar />
   <Sidebar.Inset>
     <header
-      class="bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4"
+      class="bg-background z-1 sticky top-0 flex shrink-0 items-center gap-2 border-b p-4"
     >
       {#if !isComposer}
         <Sidebar.Trigger class="-ms-1" />
@@ -64,7 +64,9 @@
               <Breadcrumb.Separator class="hidden md:block" />
               <Breadcrumb.Item>
                 <!-- Only show the id, nothing else -->
-                <Breadcrumb.Page>{emailId}</Breadcrumb.Page>
+                <Breadcrumb.Page>
+                  ...{emailId.slice(-4)}
+                </Breadcrumb.Page>
               </Breadcrumb.Item>
             {/if}
           </Breadcrumb.List>

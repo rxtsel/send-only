@@ -3,7 +3,6 @@
   import { onMount } from "svelte";
 
   import { Button } from "@/lib/components/ui/button/index.js";
-  import { ArrowLeft, Reply, Forward, Loader } from "@lucide/svelte/icons";
   import { goto } from "$app/navigation";
   import type { SentEmail } from "@/lib/types";
   import {
@@ -12,6 +11,7 @@
     isTemplateHtml,
   } from "@/lib/commom/sent";
   import Editor from "@/lib/components/editor/editor.svelte";
+  import { ArrowLeft, Forward, Loader, Reply } from "@lucide/svelte";
 
   let email = $state<SentEmail | null>(null);
   let isLoading = $state(true);
@@ -82,7 +82,7 @@
       <div class="pb-6">
         <div class="grid items-center justify-between mb-4 relative">
           <header
-            class="flex gap-1 justify-end absolute right-0 ml-auto -top-16"
+            class="flex gap-1 justify-end absolute right-0 ml-auto z-2 -top-16"
           >
             <Button variant="outline" size="sm" onclick={handleReply}>
               <Reply class="mr-2 h-4 w-4" />
