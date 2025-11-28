@@ -82,7 +82,7 @@
       <div class="pb-6">
         <div class="grid items-center justify-between mb-4 relative">
           <header
-            class="flex gap-1 justify-end absolute right-0 ml-auto z-2 -top-16"
+            class="flex gap-1 justify-end fixed right-3.5 ml-auto z-2 top-3.5"
           >
             <Button variant="outline" size="sm" onclick={handleReply}>
               <Reply class="mr-2 h-4 w-4" />
