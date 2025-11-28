@@ -3,6 +3,10 @@
 A minimal desktop application for sending emails from your own domain using **Resend**.
 Made with **Rust**, **Tauri**, and **Svelte**.
 
+<img width="1052" height="838" alt="Screenshot 2025-11-27 at 19 29 56" src="https://github.com/user-attachments/assets/7c0f39a7-473c-44f3-a0b8-e12817719156" />
+
+<img width="1241" height="797" alt="Screenshot 2025-11-27 at 19 42 11" src="https://github.com/user-attachments/assets/6c78ea78-3764-4d85-8ac9-6685837f8de3" />
+
 > [!IMPORTANT]
 > This project is in early development.  
 > Some features may be missing or unstable.
