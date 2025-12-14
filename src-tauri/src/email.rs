@@ -63,10 +63,9 @@ pub async fn send_email(app: AppHandle<Wry>, data: EmailComposerData) -> Result<
         email = email.with_reply(reply.as_str());
     }
 
-    // In-Reply-To / References
+    // In-Reply-To
     if let Some(ref msg_id) = data.message_id {
         email = email.with_header("In-Reply-To", msg_id.as_str());
-        email = email.with_header("References", msg_id.as_str());
     }
 
     // Attachments
