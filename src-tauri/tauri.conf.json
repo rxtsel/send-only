@@ -29,6 +29,8 @@
     "targets": [
       "appimage",
       "deb",
+      "rpm",
+      "dmg",
       "msi"
     ],
     "icon": [
