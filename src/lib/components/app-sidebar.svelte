@@ -209,7 +209,7 @@
         </Button>
       </div>
     </Sidebar.Header>
-    <Sidebar.Content>
+    <Sidebar.Content class="overflow-y-auto overflow-x-hidden max-w-[400px]">
       <Sidebar.Group class="px-0">
         <Sidebar.GroupContent>
           {#if mails.length === 0 && !isRefreshing}
