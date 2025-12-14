@@ -7,13 +7,10 @@
   import { Send } from "@lucide/svelte";
   import * as AlertDialog from "$lib/components/ui/alert-dialog";
   import { buttonVariants } from "$lib/components/ui/button";
-  import { useSidebar } from "@/lib/components/ui/sidebar/context.svelte.js";
-  import { goto } from "$app/navigation";
 
   let { children } = $props();
 
   let isConfirmDialogOpen = $state(false);
-  const sidebar = useSidebar();
 
   const pathname = $derived(page.url.pathname);
 
