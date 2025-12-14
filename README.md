@@ -7,9 +7,8 @@ Made with **Rust**, **Tauri**, and **Svelte**.
 
 <img width="1241" height="797" alt="Screenshot 2025-11-27 at 19 42 11" src="https://github.com/user-attachments/assets/6c78ea78-3764-4d85-8ac9-6685837f8de3" />
 
-> [!IMPORTANT]
-> This project is in early development.  
-> Some features may be missing or unstable.
+## Download
+Visit [releases](https://github.com/rxtsel/only-send/releases) for download.
 
 ## Why I built this
 
