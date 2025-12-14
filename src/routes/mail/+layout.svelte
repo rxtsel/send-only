@@ -8,6 +8,7 @@
   import * as AlertDialog from "$lib/components/ui/alert-dialog";
   import { buttonVariants } from "$lib/components/ui/button";
   import { useSidebar } from "@/lib/components/ui/sidebar/context.svelte.js";
+  import { goto } from "$app/navigation";
 
   let { children } = $props();
 
@@ -49,14 +50,7 @@
                 <Breadcrumb.Page>All sent</Breadcrumb.Page>
               {:else}
                 <!-- On /mail/sent/:id use it as link -->
-                <Breadcrumb.Link
-                  href="/mail/sent"
-                  onclick={() => {
-                    sidebar.setOpen(true);
-                  }}
-                >
-                  All sent
-                </Breadcrumb.Link>
+                <Breadcrumb.Link href="/mail/sent">All sent</Breadcrumb.Link>
               {/if}
             </Breadcrumb.Item>
 
